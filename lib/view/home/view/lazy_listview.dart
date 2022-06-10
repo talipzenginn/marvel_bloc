@@ -43,7 +43,13 @@ class _LazyListViewState extends State<LazyListView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is HomeError) {
+          ErrorExtension(
+            ErrorDialog(errorMessage: state.message),
+          ).show(context);
+        }
+      },
       builder: (context, state) {
         if (state is HomeInitial) {
           context.read<HomeCubit>().fetchNextCharacters(context);
